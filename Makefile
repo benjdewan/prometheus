@@ -32,6 +32,12 @@ include Makefile.common
 
 DOCKER_IMAGE_NAME       ?= prometheus
 
+# The k8s codegen utilities require GOPATH to be set in your
+# shell environment (not just the Go env) to work correctly
+ifndef GOPATH
+export GOPATH=$(shell go env "GOPATH")
+endif
+
 $(REACT_APP_NODE_MODULES_PATH): $(REACT_APP_PATH)/package.json $(REACT_APP_PATH)/yarn.lock
 	cd $(REACT_APP_PATH) && yarn --frozen-lockfile
 
